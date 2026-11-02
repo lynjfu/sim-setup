@@ -454,6 +454,7 @@ $('btn-empty-anyway').addEventListener('click', () => { $('warn-empty').classLis
 let step = 1;
 function go(n, push){
   n = Math.max(1, Math.min(2, n)); step = n;
+  $('warn-empty').classList.remove('on'); pendingAction = null;   // the empty-answers alert is about this visit to step 2 only
   document.querySelectorAll('section.page').forEach(s => s.classList.toggle('on', s.id === 'page' + n));
   document.querySelectorAll('#steps li').forEach(li => {
     const k = +li.dataset.step; li.classList.toggle('current', k === n); li.classList.toggle('done', k < n);
