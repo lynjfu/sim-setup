@@ -247,6 +247,11 @@ figcaption{font-size:13.5px;color:var(--muted);margin-top:8px}
       <button type="button" class="btn" id="btn-copy-prompt">Copy it instead</button>
       <span class="msg" id="msg-prompt"></span>
     </div>
+    <div class="warnbox" id="warn-empty" role="alert">
+      <p style="margin-bottom:8px"><b>You have not answered any of the five questions.</b> The prompt would reach the assistant with no description of your model.</p>
+      <p style="margin-bottom:8px">Its instructions tell it to ask about what is missing, but it asks at most six short questions, so most of the model would be its own choices. It will most likely build something close to the example included in the prompt (people searching for a good project, with an AI advisor) rather than a model of your own.</p>
+      <div class="row"><button type="button" class="btn primary" data-go="1">← Go back to the questions</button><button type="button" class="btn" id="btn-empty-anyway">Download anyway</button></div>
+    </div>
     <details><summary>Show your answers as they will be sent</summary><pre class="preview" id="preview"></pre></details>
   </div>
 
@@ -424,15 +429,26 @@ function saveText(text, name){
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type:'text/markdown;charset=utf-8' })); a.download = name;
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
-$('btn-dl-prompt').addEventListener('click', () => {
+function doDownload(){
   const t = promptText(); if (!t){ $('msg-prompt').textContent = 'The prompt did not load. Check your internet connection and reload the page.'; return; }
   saveText(t, 'my_prompt.md'); $('msg-prompt').textContent = 'Saved my_prompt.md to your downloads.';
-});
-$('btn-copy-prompt').addEventListener('click', () => {
+}
+function doCopy(){
   const t = promptText(); const m = $('msg-prompt'); if (!t){ m.textContent = 'The prompt did not load. Check your internet connection and reload the page.'; return; }
   const ok = () => m.textContent = 'Copied. Paste it into a new chat.', bad = () => m.textContent = 'Copying is blocked here. Use the download instead.';
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, bad); else bad();
-});
+}
+// Nothing answered at all: say what the assistant would do with an empty description before handing the prompt over.
+let pendingAction = null;
+function noAnswers(){ const a = read(); return STAGES.every(st => !a[st.key].trim() && !a[st.key + '-ai'].trim()); }
+function guarded(action, label){
+  if (!noAnswers()){ $('warn-empty').classList.remove('on'); action(); return; }
+  pendingAction = action; $('btn-empty-anyway').textContent = label; $('msg-prompt').textContent = '';
+  $('warn-empty').classList.add('on'); $('warn-empty').scrollIntoView({ block:'nearest', behavior:'smooth' });
+}
+$('btn-dl-prompt').addEventListener('click', () => guarded(doDownload, 'Download anyway'));
+$('btn-copy-prompt').addEventListener('click', () => guarded(doCopy, 'Copy anyway'));
+$('btn-empty-anyway').addEventListener('click', () => { $('warn-empty').classList.remove('on'); if (pendingAction) pendingAction(); pendingAction = null; });
 
 // ---- steps ----
 let step = 1;
