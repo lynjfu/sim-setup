@@ -83,6 +83,7 @@ p{margin-bottom:12px}
 .stage.fixed .head{cursor:default}
 .stage.fixed .head:hover{background:none}
 .stage .q{color:var(--fg)}
+.cite{font-size:.9em;color:var(--muted)}
 .stage .hint{font-size:13.5px;color:var(--muted);border-left:3px solid var(--track);padding-left:10px;margin:8px 0 14px}
 .stage .hint b{color:var(--fg);font-weight:500}
 /* The part to fill in: tinted panel, accent rule, pencil mark in the label */
@@ -135,6 +136,12 @@ figcaption{font-size:13.5px;color:var(--muted);margin-top:8px}
 .ui.go{background:var(--go);border-color:var(--go);color:var(--go-fg);font-weight:600;font-size:12.5px}
 .ui.pl{background:var(--pl);border-color:var(--pl);color:var(--pl-fg);font-weight:600;font-size:12.5px}
 .ui.dl{background:var(--dl);border-color:var(--dl);color:var(--dl-fg);font-weight:600;font-size:12.5px}
+/* Pop-up warning before leaving step 1 with questions unanswered */
+dialog.warn{margin:auto;max-width:min(520px,calc(100vw - 32px));border:1px solid var(--warn);border-radius:6px;padding:18px 20px;background:var(--card);color:var(--fg);font-size:14.5px}
+dialog.warn::backdrop{background:rgba(0,0,0,.45)}
+dialog.warn p{margin-bottom:10px}
+dialog.warn ul.tight{margin:0 0 10px 0;list-style:none;color:var(--fg)}
+dialog.warn .row{justify-content:flex-end;margin-top:14px}
 </style>
 </head>
 <body>
@@ -160,7 +167,7 @@ figcaption{font-size:13.5px;color:var(--muted);margin-top:8px}
   <div class="card soft">
     <h3>Role of computational simulations in organizational learning research</h3>
     <p>Unlike a formal (economic) model, simulations allow for the agents to update their beliefs with every period, and act differently in the next one. Consequently, the value of computational simulations is generally to explore organizational learning, as it allows us to simulate what happens when agents update their perception of the world and actions in it over time, based on the feedback they receive.</p>
-    <p style="margin-bottom:0">Accordingly, all computational simulations follow a fairly standard format, as described in Puranam et al. (2015). The five questions below follow it. Anything you leave out, the AI assistant will set to a usual value and tell you what it chose.</p>
+    <p style="margin-bottom:0">Accordingly, all computational simulations follow a fairly standard format, as described in <span class="cite">Puranam, Stieglitz, Osman &amp; Pillutla (2015)</span>. The five questions below follow it. Anything you leave out, the AI assistant will set to a usual value and tell you what it chose.</p>
   </div>
 
   <div class="card">
@@ -211,7 +218,12 @@ figcaption{font-size:13.5px;color:var(--muted);margin-top:8px}
     </div>
   </div>
 
-  <div class="warnbox" id="warn1" role="status"></div>
+  <dialog class="warn" id="warn1" aria-labelledby="warn1-title">
+    <p id="warn1-title"><b></b></p>
+    <ul class="tight" id="warn1-list"></ul>
+    <p>The assistant will choose usual values for anything missing and ask about the most important gaps.</p>
+    <div class="row"><button type="button" class="btn" id="btn-warn1-back">← Go back and answer</button><button type="button" class="btn primary" id="btn-warn1-go">Continue anyway →</button></div>
+  </dialog>
   <div class="nav">
     <button type="button" class="btn" id="btn-clear">Clear all answers</button>
     <button type="button" class="btn primary" id="btn-next1">Next: build it →</button>
@@ -322,10 +334,10 @@ figcaption{font-size:13.5px;color:var(--muted);margin-top:8px}
 // The five stages: the guidelines' wording, with a "Be specific where you can" line under each.
 const STAGES = [
   { key:'task', short:'Task environment', title:'Define the task environment',
-    q:"What's the nature of the task agents have to accomplish? Is it to find the best choice on a multi-armed bandit (e.g. Denrell & March, 2001)? Is it to find the highest peak on the landscape (e.g. Levinthal 1997)? Is it to coordinate on taking the same action (e.g. Kocak et al. 2023)? How many agents are tackling this problem, and are they of different types (e.g. manager vs. employee, March 1991)?",
+    q:"What's the nature of the task agents have to accomplish? Is it to find the best choice on a multi-armed bandit (e.g. Denrell & March, 2001)? Is it to find the highest peak on the landscape (e.g. Levinthal 1997)? Is it to coordinate on taking the same action (e.g. Koçak, Levinthal & Puranam, 2023)? How many agents are tackling this problem, and are they of different types (e.g. manager vs. employee, March 1991)?",
     hint:"how many agents, and how many of each type; how many options or choices there are (for a landscape, the number of choices N and how strongly they interact, K; for a bandit, the number of arms); whether the task changes during a run." },
   { key:'representation', short:'Representation of the task', title:'Define their representation of the task',
-    q:"What can agents see of the overall task, that impacts how they solve it? Do they explore around a baseline solution that their manager gives them (e.g. March 1991)? Do they explore relative to what their neighbors in their department of the organization know (e.g. Fang et al. 2010)? Do they only see a portion of all the possible actions the firm can do (e.g. Rivkin & Siggelkow, 2003)?",
+    q:"What can agents see of the overall task, that impacts how they solve it? Do they explore around a baseline solution that their manager gives them (e.g. March 1991)? Do they explore relative to what their neighbors in their department of the organization know (e.g. Fang, Lee & Schilling, 2010)? Do they only see a portion of all the possible actions the firm can do (e.g. Rivkin & Siggelkow, 2003)?",
     hint:"how many alternatives an agent can consider in one period (one, a few nearby, all); whether it sees the true value of an alternative or its own estimate, and if an estimate, where that starts; who sees whom, if agents see each other at all." },
   { key:'actions', short:'Actions', title:'Define what actions can be taken',
     q:"How do agents decide what to do from a set of options? Do they randomly explore amongst all alternatives, or exploit what they already know (e.g. March, 1991)? Can they long jump to wildly different configurations of activities (e.g. Levinthal 1997)? Can they change who they are connected to (e.g. Anjos & Reagans, 2013)?",
@@ -334,11 +346,12 @@ const STAGES = [
     q:"When agents take an action, what is the feedback they receive about what this action resulted in? Do they see the direct consequence of their choices, such as the full value of the idea they proposed (e.g. Levinthal 1997)? Is this feedback mediated through a manager, such as their choice being elevated by a manager or not (e.g. March 1991)? Is the feedback obfuscated by the choices others are simultaneously making in the organization (e.g. Rivkin & Siggelkow, 2003)? Are the payoffs the same for everyone (e.g. Levinthal & Workiewicz, 2018)?",
     hint:"what exactly is observed (the true value, a noisy version, only success or failure, only whether someone approved); how noisy; whether agents also see others' results." },
   { key:'transformation', short:'Transformation', title:'Define the transformation process',
-    q:"Upon receiving this feedback, how does this change agents' representation (2) or set of options they choose from (3)? Do they weight recent feedback more than earlier feedback (e.g. Denrell et al. 2004)? Do they incorporate more of what others in the organization know (e.g. Knudsen & Srikanth, 2014)?",
+    q:"Upon receiving this feedback, how does this change agents' representation (2) or set of options they choose from (3)? Do they weight recent feedback more than earlier feedback (e.g. Denrell, Fang & Levinthal, 2004)? Do they incorporate more of what others in the organization know (e.g. Knudsen & Srikanth, 2014)?",
     hint:"how far a new result moves a belief (all the way, a third of the way); whether anything becomes permanent (an agent leaves, a decision locks in) and what triggers it; whether agents act all at once on the situation at the start of the period or one after another; how many periods a run should last." },
 ];
 const STORE = 'sim-start-answers-v1';
 const $ = id => document.getElementById(id);
+const cite = h => h.replace(/\(e\.g\. [^()]*\)/g, m => `<span class="cite">${m}</span>`);   // in-text references a little smaller and lighter
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 // ---- build the stage cards (collapsed; click to open) ----
@@ -351,7 +364,7 @@ STAGES.forEach((st, i) => {
       <span class="ttl"><b>${i+1}. ${st.title}</b><span class="preview-line"></span></span>
       <span class="state">not answered yet</span><span class="chev" aria-hidden="true">▶</span></button>
     <div class="body" id="body-${st.key}">
-      <p class="q">${esc(st.q)}</p>
+      <p class="q">${cite(esc(st.q))}</p>
       <p class="hint"><b>Be specific where you can:</b> ${esc(st.hint)}</p>
       <div class="answer">
         <label class="field" for="f-${st.key}"><span class="no-ai">Your answer</span><span class="ai-only">The human agents</span></label>
@@ -405,7 +418,7 @@ function restore(){
   aiMode();
 }
 function aiMode(){ document.body.classList.toggle('has-ai', $('f-hasai').checked); updateStatus(); }
-document.addEventListener('input', e => { if (e.target.id && e.target.id.startsWith('f-')){ if (e.target.id === 'f-hasai') aiMode(); save(); updateStatus(); $('warn1').classList.remove('on'); warned = false; } });
+document.addEventListener('input', e => { if (e.target.id && e.target.id.startsWith('f-')){ if (e.target.id === 'f-hasai') aiMode(); save(); updateStatus(); } });
 $('btn-clear').addEventListener('click', () => {
   if (!confirm('Clear every answer on this page? This cannot be undone.')) return;
   for (const k of FIELDS){ const el = $('f-' + k); if (el.type === 'checkbox') el.checked = false; else el.value = ''; }
@@ -478,17 +491,22 @@ function go(n, push){
   window.scrollTo(0, 0);
 }
 function emptyStages(){ const a = read(); return STAGES.map((s, i) => ({ i, s, empty: !a[s.key].trim() || (a.hasai && !a[s.key + '-ai'].trim()) })).filter(x => x.empty); }
-let warned = false;
 $('btn-next1').addEventListener('click', () => {
   const miss = emptyStages();
-  if (miss.length && !warned){
-    const w = $('warn1');
-    w.innerHTML = `<b>${miss.length === 5 ? 'All five questions are' : miss.length === 1 ? 'One question is' : miss.length + ' questions are'} still empty or half answered:</b> ${miss.map(x => (x.i+1) + '. ' + x.s.short).join('; ')}. The assistant will choose usual values for anything missing and ask about the most important gaps. Press the button again to continue anyway.`;
-    miss.forEach(x => toggleCard($('stage-' + x.s.key), true));
-    w.classList.add('on'); warned = true; return;
-  }
-  warned = false; go(2);
+  if (!miss.length){ go(2); return; }
+  const w = $('warn1');
+  w.querySelector('#warn1-title b').textContent = (miss.length === 5 ? 'All five questions are' : miss.length === 1 ? 'One question is' : miss.length + ' questions are') + ' still empty or half answered:';
+  $('warn1-list').innerHTML = miss.map(x => '<li>' + (x.i+1) + '. ' + x.s.short + '</li>').join('');
+  if (w.showModal) w.showModal(); else go(2);
 });
+$('btn-warn1-go').addEventListener('click', () => { $('warn1').close(); go(2); });
+$('btn-warn1-back').addEventListener('click', () => {
+  $('warn1').close();
+  const miss = emptyStages(); miss.forEach(x => toggleCard($('stage-' + x.s.key), true));
+  const first = $('stage-' + miss[0].s.key); first.scrollIntoView({ block:'start', behavior:'smooth' });
+  setTimeout(() => $('f-' + miss[0].s.key).focus({ preventScroll:true }), 300);
+});
+$('warn1').addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) e.currentTarget.close(); });   // click outside the box closes it
 document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => go(+b.dataset.go)));
 window.addEventListener('popstate', () => go(parseInt((location.hash.match(/step(\d)/) || [])[1]) || 1, false));
 
