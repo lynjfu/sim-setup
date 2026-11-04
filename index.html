@@ -251,19 +251,18 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
 <!-- ============================ STEP 2 ============================ -->
 <section class="page" id="page2" aria-labelledby="h2">
   <h2 id="h2">Build it and run it</h2>
-  <p class="lead">One download, a short conversation with an AI assistant, then you run what it writes in the explorer: online, with nothing to install, or offline, from a folder on your own computer.</p>
+  <p class="lead">Download one prompt, talk it through with an AI assistant, then run the code it writes, online or offline.</p>
 
   <div class="card">
     <h3>1. Download your prompt</h3>
-    <p>One file that holds the instructions for the assistant and your answers, already combined. You send this file and nothing else.</p>
+    <p>Your answers and the assistant's instructions, in one file.</p>
     <div class="row">
       <button type="button" class="btn primary" id="btn-dl-prompt">Download my_prompt.md</button>
       <button type="button" class="btn" id="btn-copy-prompt">Copy it instead</button>
       <span class="msg" id="msg-prompt"></span>
     </div>
     <div class="warnbox" id="warn-empty" role="alert">
-      <p style="margin-bottom:8px"><b>You have not answered any of the five questions.</b> The prompt would reach the assistant with no description of your model.</p>
-      <p style="margin-bottom:8px">Its instructions tell it to ask about what is missing, but it asks at most six short questions, so most of the model would be its own choices. It will most likely build something close to the example included in the prompt (people searching for a good project, with an AI advisor) rather than a model of your own.</p>
+      <p style="margin-bottom:8px"><b>You have not answered any of the five questions.</b> The assistant would make most of the choices itself and will likely build something close to the example in the prompt (people searching for a good project, with an AI advisor).</p>
       <div class="row"><button type="button" class="btn primary" data-go="1">← Go back to the questions</button><button type="button" class="btn" id="btn-empty-anyway">Download anyway</button></div>
     </div>
     <details><summary>Show your answers as they will be sent</summary><pre class="preview" id="preview"></pre></details>
@@ -272,51 +271,50 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
   <div class="card">
     <h3>2. Talk to your AI assistant</h3>
     <ol class="do">
-      <li>Open a new chat in an AI assistant (Claude, ChatGPT, Gemini or another). <b>Upload <code>my_prompt.md</code></b> as an attachment, or paste its whole text, and send it. Your answers are already at the end, so add nothing else.</li>
-      <li>The assistant may ask up to six short questions about things your answers left open. Answer in plain words. “You choose” is a fine answer; it will tell you what it chose.</li>
-      <li>It then shows a short summary of your model, as a table. <b>Check it against what you meant</b> and correct anything that is wrong. This is the step that decides whether the simulation is your model.</li>
-      <li>It writes the complete model as one block of code, <code>model.js</code>. <b>Copy all of it.</b></li>
+      <li>Open a new chat in any AI assistant (Claude, ChatGPT, Gemini…). <b>Upload <code>my_prompt.md</code></b>, or paste its text, and send it.</li>
+      <li>Answer its few questions in plain words. “You choose” is fine.</li>
+      <li><b>Check its summary of your model</b> and correct anything wrong. This step decides whether the simulation is your model.</li>
+      <li>It then writes the model as one block of code. <b>Copy all of it.</b></li>
     </ol>
   </div>
 
   <div class="card">
     <h3>3. Run it: online or offline</h3>
-    <p>The explorer is the same page either way. It starts with the built-in example, which looks like this:</p>
+    <p>The explorer is a web page that runs your model. It looks like this:</p>
     <figure class="example">
       <img src="https://carolynjfu.com/sim-explorer/start/example.gif" id="example-gif" alt="The explorer running the built-in example. Settings are on the left. On the right, three line charts fill in period by period over 60 periods: performance of the people relative to the best possible, trust in the AI advisor, and how different the people's projects are. Below them, a strip shows the current state and a log adds one line per period. At the end, the Compare button overlays the averages with and without the AI.">
-      <figcaption>The built-in example: 20 people search for a good project on a rugged landscape, and an AI advisor recommends changes to them. The animation steps through one run, then presses Compare. Each “without AI” line is drawn in the same colour as its “with AI” line, with hollow markers and a different line style. Your model will appear in the same layout. <a href="https://github.com/lynjfu/sim-explorer/tree/main/examples/ai-advisor" target="_blank" rel="noopener">Read the example's answers and code</a>.</figcaption>
     </figure>
-    <p style="margin-top:14px">Choose <b>one</b> of the two ways below.</p>
+    <p style="margin-top:14px">Run yours in <b>one</b> of two ways.</p>
 
     <h3 style="margin-top:18px">3A. Online, in your browser</h3>
     <ol class="do">
       <li>Open the <a href="https://carolynjfu.com/sim-explorer/" target="_blank" rel="noopener">online explorer</a>.</li>
-      <li>Press <span class="ui go">Load your own model</span> in the top-right corner, paste the code into the box that opens, and press <span class="ui ctl primary">Load pasted code</span> under it. If the assistant gave you a file instead, press <span class="ui ctl">Choose model.js file</span>.</li>
-      <li>Look at the top-right corner. <span class="ui chip">self-check: passed ✓</span> means your model is running. If it says <span class="ui chip">self-check: 1 failed ✗</span>, click it, press <span class="ui ctl">Copy report</span>, paste the report back to the assistant with the words “please fix this”, and load the new version the same way.</li>
-      <li><b>To open it on another computer, or send it to someone:</b> press <span class="ui pl">🔗 Get a permalink</span> in the top-right corner, read what it does, then press <span class="ui ctl primary">Make the permalink</span>.</li>
+      <li>Press <span class="ui go">Load your own model</span> (top right), paste the code and press <span class="ui ctl primary">Load pasted code</span>. Got a file instead? Press <span class="ui ctl">Choose model.js file</span>.</li>
+      <li><span class="ui chip">self-check: passed ✓</span> (top right) means it runs. If it says <span class="ui chip">self-check: 1 failed ✗</span>, click it, press <span class="ui ctl">Copy report</span> and paste the report to the assistant with “please fix this”.</li>
+      <li><b>To share it or open it elsewhere:</b> press <span class="ui pl">🔗 Get a permalink</span>, then <span class="ui ctl primary">Make the permalink</span>.</li>
     </ol>
     <p class="private">🔒 Only you can see the model you load. It runs in your browser and is not uploaded; anyone else who opens the explorer’s URL still sees the built-in example. Your browser remembers your model until you press <span class="ui ctl">Use built-in model</span> or clear its data. The one exception: if you make a permalink, anyone you give it to can open your model too.</p>
 
     <h3 style="margin-top:18px">3B. Offline, from a folder on your computer</h3>
-    <p>Use this if you would rather your model not touch the website at all. It is the route in the simulation guidelines.</p>
+    <p>Keeps your model off the website entirely.</p>
     <ol class="do">
-      <li><a href="https://github.com/lynjfu/sim-explorer/archive/refs/heads/main.zip">Download the explorer folder</a> (a zip; or, on <a href="https://github.com/lynjfu/sim-explorer" target="_blank" rel="noopener">github.com/lynjfu/sim-explorer</a>, press the green <b>Code</b> button, then <b>Download ZIP</b>) and unzip it.</li>
-      <li>Save the assistant's code as <code>model.js</code> in that folder, <b>replacing the file of that name</b>. If the assistant offers the file as a download, use that. Otherwise paste the code into a plain-text editor and save it; check that the name is exactly <code>model.js</code>, not <code>model.js.txt</code>.</li>
-      <li>Open <code>index.html</code> from the folder in your browser (double-click it). <span class="ui chip">self-check: passed ✓</span> in the top-right corner means your model is running. If it says <span class="ui chip">self-check: 1 failed ✗</span>, click it, press <span class="ui ctl">Copy report</span>, give the report to the assistant with “please fix this”, replace <code>model.js</code> with the new version and reload the page.</li>
+      <li><a href="https://github.com/lynjfu/sim-explorer/archive/refs/heads/main.zip">Download the explorer folder</a> and unzip it.</li>
+      <li>Save the code as <code>model.js</code> in that folder, <b>replacing the existing file</b>. Check the name is not <code>model.js.txt</code>.</li>
+      <li>Double-click <code>index.html</code>. Check the self-check as in 3A; to fix, replace <code>model.js</code> and reload.</li>
     </ol>
-    <p class="small">Your model stays on your computer and the page sends nothing anywhere. The page needs an internet connection only to fetch the library that draws its charts. Permalinks are not available offline.</p>
+    <p class="small">Nothing is sent anywhere; the page goes online only to fetch its chart library. No permalinks offline.</p>
   </div>
 
   <div class="card">
     <h3>4. Explore it, refine it, save it</h3>
     <ol class="do">
-      <li>Press <span class="ui ctl">Step</span> to watch one run a period at a time, and <span class="ui ctl">Batch</span> to average many runs. If your model has an AI agent, <span class="ui ctl">Compare with AI vs without AI</span> overlays the runs with and without it.</li>
-      <li>Where the agents do something you did not intend, tell the assistant in the same chat (“when an agent ties, it should stay, not switch”; “add a setting for how noisy the AI is”). The agents' rules, the settings, the charted quantities, the strip and the log can all change this way. The page itself stays the same for everyone. Keep a short list of what you changed and why. Run each new version the way you ran the first (3A or 3B).</li>
-      <li>When you have a version you want to keep, press <span class="ui dl">Download zip</span> in the top-right corner of the explorer, choose how many runs to include and press <span class="ui ctl primary">Make zip</span>. The zip holds your model code, every run's numbers, the averages, the charts as images and the settings needed to reproduce them. Its <code>index.html</code> is the explorer with your model inside: open it any time, on any computer, to run your model again. (Offline, if the box asks for your <code>model.js</code>, choose it so the code goes into the zip.)</li>
+      <li><span class="ui ctl">Step</span> runs one period at a time; <span class="ui ctl">Batch</span> averages many runs; <span class="ui ctl">Compare with AI vs without AI</span> overlays the two, if your model has an AI.</li>
+      <li>If the agents do something you did not intend, tell the assistant in the same chat (“when an agent ties, it should stay, not switch”). Keep a short list of what you changed and why. Run each new version the way you ran the first.</li>
+      <li>To keep a version, press <span class="ui dl">Download zip</span> (top right), then <span class="ui ctl primary">Make zip</span>. The zip holds your code, every run's numbers, the charts and the settings, plus an <code>index.html</code> that runs your model on any computer. (Offline, choose your <code>model.js</code> if asked.)</li>
     </ol>
   </div>
 
-  <p class="small">Want everything behind the page? The full repository is at <a href="https://github.com/lynjfu/sim-explorer" target="_blank" rel="noopener">github.com/lynjfu/sim-explorer</a>.</p>
+  <p class="small">Full repository: <a href="https://github.com/lynjfu/sim-explorer" target="_blank" rel="noopener">github.com/lynjfu/sim-explorer</a>.</p>
 
   <div class="nav">
     <button type="button" class="btn" data-go="1">← Back to your answers</button>
