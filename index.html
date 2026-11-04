@@ -243,6 +243,7 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
       <p>March, J. G. (1991). Exploration and exploitation in organizational learning. <i>Organization Science</i>, 2(1), 71-87.</p>
       <p>Puranam, P., Stieglitz, N., Osman, M., &amp; Pillutla, M. M. (2015). Modelling bounded rationality in organizations: Progress and prospects. <i>Academy of Management Annals</i>, 9(1), 337-392.</p>
       <p>Rivkin, J. W., &amp; Siggelkow, N. (2003). Balancing search and stability: Interdependencies among elements of organizational design. <i>Management Science</i>, 49(3), 290-311.</p>
+      <p>Siggelkow, N., &amp; Rivkin, J. W. (2005). Speed and search: Designing organizations for turbulence and complexity. <i>Organization Science</i>, 16(2), 101-122.</p>
     </div>
   </details>
 </section>
@@ -334,7 +335,7 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
 // The five stages: the guidelines' wording, with a "Be specific where you can" line under each.
 const STAGES = [
   { key:'task', short:'Task environment', title:'Define the task environment',
-    q:"What's the nature of the task agents have to accomplish? Is it to find the best choice on a multi-armed bandit (e.g. Denrell & March, 2001)? Is it to find the highest peak on the landscape (e.g. Levinthal 1997)? Is it to coordinate on taking the same action (e.g. Koçak, Levinthal & Puranam, 2023)? How many agents are tackling this problem, and are they of different types (e.g. manager vs. employee, March 1991)?",
+    q:"What's the nature of the task agents have to accomplish? Is it to find the best choice on a multi-armed bandit (e.g. Denrell & March, 2001)? Is it to find the highest peak on the landscape (e.g. Levinthal 1997)? Is it to coordinate on taking the same action (e.g. Koçak, Levinthal & Puranam, 2023)? How many agents are tackling this problem, and are they of different types, like manager vs. employee (e.g. Siggelkow & Rivkin, 2005)?",
     hint:"how many agents, and how many of each type; how many options or choices there are (for a landscape, the number of choices N and how strongly they interact, K; for a bandit, the number of arms); whether the task changes during a run." },
   { key:'representation', short:'Representation of the task', title:'Define their representation of the task',
     q:"What can agents see of the overall task, that impacts how they solve it? Do they explore around a baseline solution that their manager gives them (e.g. March 1991)? Do they explore relative to what their neighbors in their department of the organization know (e.g. Fang, Lee & Schilling, 2010)? Do they only see a portion of all the possible actions the firm can do (e.g. Rivkin & Siggelkow, 2003)?",
