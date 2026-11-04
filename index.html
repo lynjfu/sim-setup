@@ -273,7 +273,7 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
     <ol class="do">
       <li>Open a new chat in any AI assistant (Claude, ChatGPT, Gemini…). <b>Upload <code>my_prompt.md</code></b>, or paste its text, and send it.</li>
       <li>The assistant may ask up to six short questions about things your answers left open. Answer in plain words. “You choose” is a fine answer; it will tell you what it chose.</li>
-      <li><b>Check its summary of your model</b> and correct anything wrong. This step decides whether the simulation is your model.</li>
+      <li><b>Check its summary of your model</b> and correct anything wrong.</li>
       <li>Once you confirm, it writes the complete model, <code>model.js</code>, as one block of code, followed by how to run it and what it assumed. <b>Copy the whole code block</b>, or download the <code>model.js</code> if offered.</li>
     </ol>
   </div>
@@ -299,7 +299,7 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
     <p>Keeps your model off the website entirely.</p>
     <ol class="do">
       <li><a href="https://github.com/lynjfu/sim-explorer/archive/refs/heads/main.zip">Download the explorer folder</a> and unzip it.</li>
-      <li>Save the code as <code>model.js</code> in that folder, <b>replacing the existing file</b>. If the assistant offers the file as a download, use that. Otherwise paste the code into a plain-text editor and save it.</li>
+      <li>Save the code as <code>model.js</code> in that folder, <b>replacing the existing file</b>.</li>
       <li>Double-click <code>index.html</code>.</li>
       <li><b>To save your results:</b> press <span class="ui dl">Download zip</span> (top right), then <span class="ui ctl primary">Make zip</span>.</li>
       <li><b>To share it or open it elsewhere:</b> send the whole folder (zipped). The other person opens <code>index.html</code> in it.</li>
@@ -309,8 +309,7 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
   <div class="card">
     <h3>4. Check it, explore it, refine it</h3>
     <ol class="do">
-      <li><span class="ui chip">self-check: passed ✓</span> (top right) means it runs. If it says <span class="ui chip">self-check: 1 failed ✗</span>, click it, press <span class="ui ctl">Copy report</span> and paste the report to the assistant with “please fix this”, then run the version it gives you the way you ran the first.</li>
-      <li><span class="ui ctl">Step</span> runs one period at a time; <span class="ui ctl">Batch</span> averages many runs; <span class="ui ctl">Compare with AI vs without AI</span> overlays the two, if your model has an AI.</li>
+      <li><span class="ui chip">self-check: passed ✓</span> means the model is running seamlessly. If it says <span class="ui chip">self-check: 1 failed ✗</span>, click it, press <span class="ui ctl">Copy report</span>, paste the report to the assistant with “please fix this” and run the version it gives you the way you ran the first.</li>
       <li>If the agents do something you did not intend, tell the assistant in the same chat (“when an agent ties, it should stay, not switch”). Run each new version the way you ran the first.</li>
     </ol>
   </div>
