@@ -290,7 +290,7 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
     <ol class="do">
       <li>Open the <a href="https://carolynjfu.com/sim-explorer/" target="_blank" rel="noopener">online explorer</a>.</li>
       <li>Press <span class="ui go">Load your own model</span> (top right), paste the code and press <span class="ui ctl primary">Load pasted code</span>. Got a file instead? Press <span class="ui ctl">Choose model.js file</span>.</li>
-      <li><span class="ui chip">self-check: passed ✓</span> (top right) means it runs. If it says <span class="ui chip">self-check: 1 failed ✗</span>, click it, press <span class="ui ctl">Copy report</span> and paste the report to the assistant with “please fix this”.</li>
+      <li><b>To save a copy on your computer:</b> press <span class="ui dl">Download zip</span> (top right), then <span class="ui ctl primary">Make zip</span>. The zip holds your code, every run's numbers, the charts and the settings, plus an <code>index.html</code> that runs your model on any computer.</li>
       <li><b>To share it or open it elsewhere:</b> press <span class="ui pl">🔗 Get a permalink</span>, then <span class="ui ctl primary">Make the permalink</span>.</li>
     </ol>
     <p class="private">🔒 Only you can see the model you load. It runs in your browser and is not uploaded; anyone else who opens the explorer’s URL still sees the built-in example. Your browser remembers your model until you press <span class="ui ctl">Use built-in model</span> or clear its data. The one exception: if you make a permalink, anyone you give it to can open your model too.</p>
@@ -299,18 +299,19 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
     <p>Keeps your model off the website entirely.</p>
     <ol class="do">
       <li><a href="https://github.com/lynjfu/sim-explorer/archive/refs/heads/main.zip">Download the explorer folder</a> and unzip it.</li>
-      <li>Save the code as <code>model.js</code> in that folder, <b>replacing the existing file</b>. Check the name is not <code>model.js.txt</code>.</li>
-      <li>Double-click <code>index.html</code>. Check the self-check as in 3A; to fix, replace <code>model.js</code> and reload.</li>
+      <li>Save the code as <code>model.js</code> in that folder, <b>replacing the existing file</b>.</li>
+      <li>Double-click <code>index.html</code>.</li>
+      <li><b>To share it or open it elsewhere:</b> send the whole folder (zipped). The other person opens <code>index.html</code> in it.</li>
     </ol>
     <p class="small">Nothing is sent anywhere; the page goes online only to fetch its chart library. No permalinks offline.</p>
   </div>
 
   <div class="card">
-    <h3>4. Explore it, refine it, save it</h3>
+    <h3>4. Check it, explore it, refine it</h3>
     <ol class="do">
+      <li><span class="ui chip">self-check: passed ✓</span> (top right) means it runs. If it says <span class="ui chip">self-check: 1 failed ✗</span>, click it, press <span class="ui ctl">Copy report</span> and paste the report to the assistant with “please fix this”.</li>
       <li><span class="ui ctl">Step</span> runs one period at a time; <span class="ui ctl">Batch</span> averages many runs; <span class="ui ctl">Compare with AI vs without AI</span> overlays the two, if your model has an AI.</li>
-      <li>If the agents do something you did not intend, tell the assistant in the same chat (“when an agent ties, it should stay, not switch”). Keep a short list of what you changed and why. Run each new version the way you ran the first.</li>
-      <li>To keep a version, press <span class="ui dl">Download zip</span> (top right), then <span class="ui ctl primary">Make zip</span>. The zip holds your code, every run's numbers, the charts and the settings, plus an <code>index.html</code> that runs your model on any computer. (Offline, choose your <code>model.js</code> if asked.)</li>
+      <li>If the agents do something you did not intend, tell the assistant in the same chat (“when an agent ties, it should stay, not switch”). Run each new version the way you ran the first.</li>
     </ol>
   </div>
 
