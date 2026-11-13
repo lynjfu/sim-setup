@@ -21,17 +21,17 @@
   --bg:#f3f4f6; --panel:#e9ebef; --card:#ffffff; --fg:#1f2328; --muted:#5c6470; --faint:#9aa1ab; --rule:#d3d7dd;
   --accent:#2f4b6e; --accent-fg:#ffffff; --track:#cfd4db; --warn:#8a5a00; --warn-bg:#fff4d6;
   --ans-bg:#eaf1f9; --ans-rule:#2f4b6e; --input:#ffffff;
-  --go:#0b6e4f; --go-fg:#ffffff; --dl:#b34700; --dl-fg:#ffffff; --pl:#0b5cad; --pl-fg:#ffffff; --priv:#b3261e;
+  --go:#0b6e4f; --go-fg:#ffffff; --dl:#b34700; --dl-fg:#ffffff; --pl:#0b5cad; --pl-fg:#ffffff; --priv:#b3261e; --pc:#6a3d9a;
   --sans:"IBM Plex Sans",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#17191d; --panel:#1f2228; --card:#24282f; --fg:#e6e8eb; --muted:#aab1bb; --faint:#6f7781; --rule:#363b44;
-  --accent:#8fb3dc; --accent-fg:#101318; --track:#3a404a; --warn:#f0c674; --warn-bg:#3a3020; --go:#5ec29a; --go-fg:#0f1a14; --dl:#f0a35e; --dl-fg:#1f1408; --pl:#7fb6f0; --pl-fg:#0e1a28; --priv:#ff8a80; color-scheme:dark;
+  --accent:#8fb3dc; --accent-fg:#101318; --track:#3a404a; --warn:#f0c674; --warn-bg:#3a3020; --go:#5ec29a; --go-fg:#0f1a14; --dl:#f0a35e; --dl-fg:#1f1408; --pl:#7fb6f0; --pl-fg:#0e1a28; --priv:#ff8a80; --pc:#c9a8ea; color-scheme:dark;
   --ans-bg:#1c2633; --ans-rule:#8fb3dc; --input:#17191d; }}
 :root[data-theme="dark"]{
   --bg:#17191d; --panel:#1f2228; --card:#24282f; --fg:#e6e8eb; --muted:#aab1bb; --faint:#6f7781; --rule:#363b44;
-  --accent:#8fb3dc; --accent-fg:#101318; --track:#3a404a; --warn:#f0c674; --warn-bg:#3a3020; --go:#5ec29a; --go-fg:#0f1a14; --dl:#f0a35e; --dl-fg:#1f1408; --pl:#7fb6f0; --pl-fg:#0e1a28; --priv:#ff8a80; color-scheme:dark;
+  --accent:#8fb3dc; --accent-fg:#101318; --track:#3a404a; --warn:#f0c674; --warn-bg:#3a3020; --go:#5ec29a; --go-fg:#0f1a14; --dl:#f0a35e; --dl-fg:#1f1408; --pl:#7fb6f0; --pl-fg:#0e1a28; --priv:#ff8a80; --pc:#c9a8ea; color-scheme:dark;
   --ans-bg:#1c2633; --ans-rule:#8fb3dc; --input:#17191d; }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -45,7 +45,7 @@ code{font-family:var(--mono);font-size:.9em}
 /* Top bar with the progress line */
 header{background:var(--panel);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:5}
 .bar{max-width:820px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.bar h1{font-size:15px;font-weight:600;white-space:nowrap}
+.bar h1{font-size:19px;font-weight:700;white-space:nowrap;letter-spacing:.01em;background:var(--accent);color:var(--accent-fg);padding:3px 12px;border-radius:4px}
 .bar .home{font-size:12.5px;color:var(--muted);margin-left:auto}
 .bar nav{flex:1;min-width:0}
 ol.steps{list-style:none;display:flex;align-items:center;gap:0;min-width:0}
@@ -146,6 +146,8 @@ figcaption{font-size:13.5px;color:var(--muted);margin-top:8px}
 .ui.chip{font-family:var(--mono);font-size:11.5px;background:var(--card);color:var(--muted)}
 .ui.go{background:var(--go);border-color:var(--go);color:var(--go-fg);font-weight:600;font-size:12.5px}
 .ui.pl{background:var(--pl);border-color:var(--pl);color:var(--pl-fg);font-weight:600;font-size:12.5px}
+.ui.pc{background:var(--card);border:1.5px solid var(--pc);color:var(--pc);font-weight:600;font-size:12.5px}
+.caution{background:var(--warn-bg);border:1px solid var(--warn);border-left-width:4px;border-radius:4px;padding:8px 12px;margin-bottom:8px}
 .ui.dl{background:var(--dl);border-color:var(--dl);color:var(--dl-fg);font-weight:600;font-size:12.5px}
 /* Pop-up warning before leaving step 1 with questions unanswered */
 dialog.warn{margin:auto;max-width:min(520px,calc(100vw - 32px));border:1px solid var(--warn);border-radius:6px;padding:18px 20px;background:var(--card);color:var(--fg);font-size:14.5px}
@@ -322,7 +324,7 @@ dialog.warn .row{justify-content:flex-end;margin-top:14px}
     <ol class="do">
       <li><span class="ui chip">self-check: passed ✓</span> means the model is running seamlessly. If it says <span class="ui chip">self-check: 1 failed ✗</span>, click it, press <span class="ui ctl">Copy report</span>, paste the report to the assistant with “please fix this” and run the version it gives you the way you ran the first.</li>
       <li><b>Explore it:</b> change the parameters on the left, then press <span class="ui ctl primary">Play</span> to watch one run, <span class="ui ctl">Batch</span> to average many runs, or <span class="ui ctl">Sweep</span> to see how the outcome changes across the values of one parameter. If your model has an AI, <span class="ui ctl">Compare with AI vs without AI</span> overlays the two. To see what a button does, hover over it or press the ⓘ beside it.</li>
-      <li>If the agents do something you did not intend, tell the assistant in the same chat (“when an agent ties, it should stay, not switch”). Run each new version the way you ran the first.</li>
+      <li><div class="caution"><b>⚠ Caution:</b> In order to get the model up and running, AI will take (grounded) liberties with anything that has been underspecified. Be sure to check the <span class="ui pc">📄 Pseudocode</span> (next to <b>Model</b>, top left of the explorer) to ensure the model in fact behaves as you intended.</div>If the agents do something you did not intend, tell the assistant in the same chat (“when an agent ties, it should stay, not switch”). Run each new version the way you ran the first.</li>
     </ol>
   </div>
 
